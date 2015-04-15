@@ -12,10 +12,14 @@ if (Meteor.isClient) {
 
   Template.upload.events({
     'click button': function () {
-      filepicker.pickAndStore({mimetype:"image/*"},{},
-      function(InkBlobs){
-        Uploads.insert(InkBlobs[0]);
-      });
+      filepicker.pickMultiple(
+        function(Blobs){        
+          $.each(Blobs, function(i, val) {
+            console.log(val.url);
+            Uploads.insert(val);
+          });
+        }
+      );
     }
   });
 
